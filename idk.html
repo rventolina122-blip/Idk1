@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:Poppins;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.container{
+    z-index:2;
+}
+
+h1{
+    font-size:45px;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+    border:none;
+    border-radius:40px;
+    margin:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#yesBtn{
+    background:#ff4d6d;
+    color:white;
+}
+
+#noBtn{
+    background:white;
+    color:#ff4d6d;
+    position:absolute;
+}
+
+/* floating hearts */
+.heart{
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:#ff4d6d;
+    transform:rotate(45deg);
+    animation: float 6s linear infinite;
+}
+
+.heart::before,.heart::after{
+    content:'';
+    position:absolute;
+    width:20px;
+    height:20px;
+    background:#ff4d6d;
+    border-radius:50%;
+}
+.heart::before{ top:-10px; left:0; }
+.heart::after{ left:-10px; top:0; }
+
+@keyframes float{
+    0%{transform:translateY(100vh) rotate(45deg);}
+    100%{transform:translateY(-10vh) rotate(45deg);}
+}
+
+#loveMsg{
+    font-size:50px;
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="question">Will you be my Valentine? ❤️</h1>
+    <div id="buttons">
+        <button id="yesBtn">YES 💖</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+    <h1 id="loveMsg">YAAAY I LOVE YOU SO MUCH 😭💖</h1>
+</div>
+
+<script>
+let noTexts = [
+"No 😢","Are you sure? 😭","Please? 🥺",
+"I'll cry 😭","Last chance 😭","Okay fine 😭"
+];
+
+let noCount = 0;
+let yesSize = 1;
+
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+noBtn.addEventListener("click", () => {
+    noCount++;
+
+    // change text
+    noBtn.innerText = noTexts[noCount % noTexts.length];
+
+    // make YES bigger
+    yesSize += 0.3;
+    yesBtn.style.transform = `scale(${yesSize})`;
+
+    // move NO button randomly
+    noBtn.style.top = Math.random()*80 + "%";
+    noBtn.style.left = Math.random()*80 + "%";
+});
+
+yesBtn.addEventListener("click", () => {
+    document.getElementById("question").style.display="none";
+    document.getElementById("buttons").style.display="none";
+    document.getElementById("loveMsg").style.display="block";
+    createHearts(50);
+});
+
+// floating hearts generator
+function createHearts(num){
+    for(let i=0;i<num;i++){
+        let heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.animationDuration=(3+Math.random()*3)+"s";
+        document.body.appendChild(heart);
+    }
+}
+</script>
+
+</body>
+</html>
